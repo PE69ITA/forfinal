@@ -31,7 +31,8 @@ function App() {
 
     return bookedSlots.some(
       (slot) =>
-        slot.date.toISOString() === selectedDateTime.toISOString() && slot.hour === hour
+        slot.date.toISOString() === selectedDateTime.toISOString() &&
+        slot.hour === hour
     );
   };
 
@@ -63,10 +64,19 @@ function App() {
     selectedDateTime.setHours(hour);
 
     if (!isSlotBooked(hour) && canBookSlot(hour)) {
-      setBookedSlots([...bookedSlots, { date: selectedDateTime, hour }]);
-      toast.success(`Slot booked for ${hour}:00 - ${hour + 1}:00 on ${selectedDateTime.toDateString()}`);
+      setBookedSlots([
+        ...bookedSlots,
+        { date: selectedDateTime, hour },
+      ]);
+      toast.success(
+        `Slot booked for ${hour}:00 - ${
+          hour + 1
+        }:00 on ${selectedDateTime.toDateString()}`
+      );
     } else if (isSlotBooked(hour)) {
-      toast.error(`Slot is already booked for ${hour}:00 on ${selectedDateTime.toDateString()}`);
+      toast.error(
+        `Slot is already booked for ${hour}:00 on ${selectedDateTime.toDateString()}`
+      );
     } else {
       toast.error(`Cannot book a time that has passed.`);
     }
@@ -78,28 +88,66 @@ function App() {
 
     const updatedBookedSlots = bookedSlots.filter(
       (slot) =>
-        !(slot.date.toISOString() === selectedDateTime.toISOString() && slot.hour === hour)
+        !(
+          slot.date.toISOString() === selectedDateTime.toISOString() &&
+          slot.hour === hour
+        )
     );
 
     setBookedSlots(updatedBookedSlots);
-    toast.info(`Booking canceled for ${hour}:00 - ${hour + 1}:00 on ${selectedDateTime.toDateString()}`);
+    toast.info(
+      `Booking canceled for ${hour}:00 - ${
+        hour + 1
+      }:00 on ${selectedDateTime.toDateString()}`
+    );
   };
 
   const renderTileContent = ({ date, view }) => {
     if (view === 'month') {
       const bookingStatus = calculateBookedPercentage(date);
       if (bookingStatus === 'half') {
-        return <div className="calendar-day-highlight yellow-bg"></div>;
+        return (
+          <div className="calendar-day-highlight yellow-bg"></div>
+        );
       } else if (bookingStatus === 'full') {
-        return <div className="calendar-day-highlight red-bg"></div>;
+        return (
+          <div className="calendar-day-highlight red-bg"></div>
+        );
       }
     }
     return null;
   };
 
+  const handleUsernameChange = (e) => {
+    const inputText = e.target.value;
+    // Оставить только буквы в поле "Username"
+    const filteredText = inputText.replace(/[^A-Za-z]/g, '');
+    setUsername(filteredText);
+  };
+
+  const handlePhoneNumberChange = (e) => {
+    const inputText = e.target.value;
+    // Оставить только цифры и пробелы в поле "Phone Number"
+    const filteredText = inputText.replace(/[^0-9\s]/g, '');
+    setPhoneNumber(filteredText);
+  };
+
+  const handleLogin = () => {
+    // Проверка на наличие всех необходимых данных
+    if (!username || !password || !phoneNumber) {
+      toast.error('Please provide complete login information.');
+      return;
+    }
+
+    // Дополнительные проверки, если необходимо
+
+    setLoggedIn(true);
+  };
+
   return (
     <div className="app-container">
       <header className="header">
+        <div className='aiulogo'></div>
         <h1>Time Booking Calendar</h1>
         {isLoggedIn ? (
           <button onClick={() => setLoggedIn(false)}>Logout</button>
@@ -109,7 +157,7 @@ function App() {
               type="text"
               placeholder="Username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleUsernameChange}
             />
             <input
               type="password"
@@ -121,10 +169,10 @@ function App() {
               type="tel"
               placeholder="Phone Number"
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={handlePhoneNumberChange}
             />
             <button
-              onClick={() => setLoggedIn(true)}
+              onClick={handleLogin}
               className={isDayBooked(selectedDate) ? 'booked-day' : ''}
             >
               {isDayBooked(selectedDate) ? 'Booked' : 'Login'}

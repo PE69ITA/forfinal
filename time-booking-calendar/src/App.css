@@ -7,6 +7,12 @@ body {
   font-family: 'Arial', sans-serif;
 }
 
+.aiulogo {
+  background: url('logo_aiu.png') center;
+  width: 150px;
+  height: 150px;
+}
+
 .app-container {
   max-width: 800px;
   margin: 0 auto;
@@ -24,16 +30,28 @@ body {
 
 .login-form {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
+  margin-top: 20px;
 }
 
 .login-form input {
-  padding: 5px;
+  padding: 10px;
+  width: 200px; /* Увеличьте ширину полей ввода */
 }
 
 .login-form button {
-  padding: 5px 10px;
+  padding: 10px 20px;
   cursor: pointer;
+  background-color: #4caf50; /* Зеленый цвет кнопки */
+  color: #fff; /* Белый цвет текста на кнопке */
+  border: none;
+  border-radius: 5px;
+}
+
+.login-form button:hover {
+  background-color: #45a049; /* Зеленый цвет кнопки при наведении курсора */
 }
 
 .calendar-container {
@@ -48,11 +66,11 @@ body {
 }
 
 .yellow-bg {
-  background-color: #ffe066; /* Yellow background */
+  background-color: #ffe066; /* Желтый фон для подсветки календарных дней */
 }
 
 .red-bg {
-  background-color: #ff6666; /* Red background */
+  background-color: #ff6666; /* Красный фон для подсветки календарных дней */
 }
 
 .time-slots-container {
@@ -68,21 +86,21 @@ body {
 }
 
 .booked-slot {
-  background-color: #f5f5f5; /* Light gray background for booked slots */
+  background-color: none; /* Светло-серый фон для забронированных слотов */
 }
 
 .booked-text {
-  color: #ff6666; /* Red color for booked text */
+  color: #ff0000; /* Красный цвет для текста о забронированных слотах */
 }
 
 .toast-success {
-  background-color: #66bb6a; /* Green background for success toast */
+  background-color: #66bb6a; /* Зеленый фон для успешного уведомления */
 }
 
 .toast-error {
-  background-color: #ef5350; /* Red background for error toast */
+  background-color: #ef5350; /* Красный фон для уведомления об ошибке */
 }
 
 .toast-info {
-  background-color: #29b6f6; /* Blue background for info toast */
+  background-color: #29b6f6; /* Синий фон для информационного уведомления */
 }
